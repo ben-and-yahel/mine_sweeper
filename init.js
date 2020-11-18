@@ -26,7 +26,7 @@ squars = []; // square => [int]
  y_squares = 15;
  x_squares = 30;
 board = [];
-mines_number = 12;
+mines_number = 30;
 flags_counter = mines_number;
 const flagImage = new Image(width - 10, height - 10); // Using optional size for image
 // Load an image of intrinsic size 300x227 in CSS pixels
@@ -99,6 +99,7 @@ function printSquares() {
     for (let i = 0; i < squars.length; i++) {
         for (let j = 0; j < squars[i].length; j++) {
             //draw mines
+            color = "#0066ff";
             if (squars[i][j].number == -1 && squars[i][j].show) {
                 color = "red";
             }
@@ -198,8 +199,9 @@ function expand(board,x,y)
 }
 function bomb(board)//showing the location of all he mines
 {
-    for(let y = 0;y < board.length;y++){
-        for(let x = 0;x < board[y].length;x++){
+        for(let x = 0;x < board.length;x++){
+            for(let y = 0;y < board[x].length;y++){
+
             if(board[x][y].number == -1)
             {
                 board[x][y].show = true;
@@ -239,8 +241,9 @@ function checkWin(board)//check for 2 kinds of win
 }
 function checkWinByMines(board)//checks if al of the mines are flaged
 {
-    for(let y = 0;y < board.length;y++){
-        for(let x = 0;x < board[y].length;x++){
+    for(let x = 0;x < board.length;x++){
+        for(let y = 0;y < board[x].length;y++){
+
             if(board[x][y].number == -1 && board[x][y].redFlag == false)
             {
                 return false;
@@ -251,8 +254,9 @@ function checkWinByMines(board)//checks if al of the mines are flaged
 }
 function checkWinBySquares(board)//checks if all of the squares are shown
 {
-    for(let y = 0;y < board.length;y++){
-        for(let x = 0;x < board[y].length;x++){
+    for(let x = 0;x < board.length;x++){
+        for(let y = 0;y < board[x].length;y++){
+
             if(board[x][y].number != -1 && board[x][y].show == false)
             {
                 return false;
