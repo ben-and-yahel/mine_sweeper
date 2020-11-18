@@ -99,7 +99,7 @@ function init() {
         for (let j = 0; j < y_squares; j++) {
             tmp_squars_line.push(new square(0,false));
         } 
-        squars.push(tmp_squars_line);      
+        board.push(tmp_squars_line);      
     }
     printSquares(squars);
 }
