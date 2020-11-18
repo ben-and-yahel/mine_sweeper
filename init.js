@@ -252,3 +252,31 @@ function draw_square(point) {
 function update_square(point) {
     animate_square = setInterval(draw_square,1000/animation_rate,point);
 }
+function checkWin(board)
+{
+    return checkWinByMines(board) || checkWinBySquares(board);
+}
+function checkWinByMines(board)
+{
+    for(let y = 0;y < board.length;y++){
+        for(let x = 0;x < board[y].length;x++){
+            if(board[x][y].number == -1 && board[x][y].redFlag == false)
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+function checkWinBySquares(board)
+{
+    for(let y = 0;y < board.length;y++){
+        for(let x = 0;x < board[y].length;x++){
+            if(board[x][y].number != -1 && board[x][y].show == false)
+            {
+                return false;
+            }
+        }
+    }
+    return true;
+}
