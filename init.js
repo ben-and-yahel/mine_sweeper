@@ -24,6 +24,7 @@ seperate = 1;
 squars = []; // square => [int]
 x_squares = y_squares = 10;
 board = [];
+mines_number = 80;
 const flagImage = new Image(width - 10, height - 10); // Using optional size for image
 // Load an image of intrinsic size 300x227 in CSS pixels
 flagImage.src = 'kisspng-red-flag-computer-icons-clip-art-flag-5ab891fa270012.8897476815220454341598.png';
@@ -80,7 +81,7 @@ function init() {
         } 
         squars.push(tmp_squars_line);      
     }
-    bombs = mine_setter(20);
+    bombs = mine_setter(mines_number);
     surround(squars, bombs);
     
     
