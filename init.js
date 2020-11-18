@@ -90,6 +90,7 @@ function mine_setter(bombs_number) {
             y = Math.floor((Math.random() * y_squares) + 0);
         }while(check_duplicate_mines(bombs,x,y) == false);
         squars[x][y].number = -1;
+        bombs.push([x,y]);
     }
     return bombs;
 }
