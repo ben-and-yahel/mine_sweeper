@@ -6,7 +6,8 @@ function dynamicallyLoadScript(url) {
 
 window.onload =function() {
     dynamicallyLoadScript("button_functions.js");
-
+    welcome = document.getElementById("welcome");
+    welcome.innerHTML = "Welocome to the Mine Sweeper!";
     //document.addEventListener("keypress",draw_path);
     document.oncontextmenu = onClick;
     canv=document.getElementById("gc");
@@ -25,6 +26,7 @@ squars = []; // square => [int]
 x_squares = y_squares = 10;
 board = [];
 mines_number = 15;
+flags_counter = mines_number;
 const flagImage = new Image(width - 10, height - 10); // Using optional size for image
 // Load an image of intrinsic size 300x227 in CSS pixels
 flagImage.src = 'kisspng-red-flag-computer-icons-clip-art-flag-5ab891fa270012.8897476815220454341598.png';
@@ -91,6 +93,8 @@ function init() {
 function printSquares() {
     x = y = 0;
     color = "grey";
+    welcome.innerHTML = "Welocome to the Mine Sweeper! you got "+flags_counter+" flags / "+mines_number+" mines";
+
     for (let i = 0; i < squars.length; i++) {
         for (let j = 0; j < squars[i].length; j++) {
             //draw mines
@@ -139,7 +143,19 @@ function onClick(e) {
                             squars[x][y].question = true;
                             break;
                         case 2:
-                            squars[x][y].redFlag = true;
+                            
+                            if (squars[x][y].redFlag == true) {
+                                flags_counter += 1;
+                                squars[x][y].show = false;
+                                squars[x][y].redFlag = false;
+                            }
+                            else if (flags_counter == 0) {
+                                break;
+                            }
+                            else {
+                                squars[x][y].redFlag = true;
+                                flags_counter -= 1;
+                            }
                             break;
                         default:
                             break;
