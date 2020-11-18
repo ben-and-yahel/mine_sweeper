@@ -25,7 +25,7 @@ seperate = 1;
 squars = []; // square => [int]
 x_squares = y_squares = 10;
 board = [];
-mines_number = 15;
+mines_number = 1;
 flags_counter = mines_number;
 const flagImage = new Image(width - 10, height - 10); // Using optional size for image
 // Load an image of intrinsic size 300x227 in CSS pixels
@@ -119,13 +119,6 @@ function printSquares() {
 }
 /*TODO: require doc!! */
 function onClick(e) {
-    class Point{
-        constructor(x, y , click_number){
-            this.x = x;
-            this.y = y;
-            this.click_number = click_number;
-        }
-    }
     square_animation_index = 0;
     clearInterval(animate_square);
     pageShift = 65;
@@ -165,7 +158,9 @@ function onClick(e) {
         }
     }
     printSquares();
-    return false;
+    if (checkWin(squars)) {
+        alert("you won the game!!!");
+    } 
 }
 function expand(board,x,y)
 {
