@@ -18,7 +18,7 @@ window.onload =function() {
 }
 
 class Point{
-    constructor(x, y, color="grey"){
+    constructor(x, y){
         this.x = x;
         this.y = y;
         this.color = color;
@@ -26,27 +26,6 @@ class Point{
         this.G_cost = 0;//distance between the start point and another point
         this.F_cost = 0;// the sum of g cost and h cost
     }
-    upgrade(depth) {
-        this.H_cost = calculateHcost(this);
-        this.G_cost = calculateGcost(this);
-        this.G_cost = (this.G_cost + depth*100) / 2.0;
-        this.F_cost = this.H_cost*0.7 + this.G_cost*0.3;
-    }
-}
-class Node{
-    constructor(p,n){
-        this.point = p;
-        this.node = n;
-        this.depth = 0;
-        if(n != null)
-        {
-            this.depth = n.depth + 1;
-        }
-    }
-    upgrade() {
-        this.point.upgrade(this.depth);
-    }
-
 }
 strap_height = 138;
 height = width = 100;
@@ -105,7 +84,7 @@ function init() {
         squars.push(tmp_squars_line);      
     }
     bombs = mine_setter(20);
-    squars = surround(squars, bombs);
+    //squars = surround(squars, bombs);
     printSquares();
 }
 //for loop on every item and show it on the canvas
@@ -120,6 +99,9 @@ function printSquares() {
             else if (squars[i][j].number == 1) {
                 color = "blue";
             }
+            else if(squars[i][j].show == true){
+                color = "black";
+            }
             else{
                 color = "grey";
             }
@@ -130,9 +112,9 @@ function printSquares() {
 }
 //make the animation of sqaure been choosen
 function draw_square(point) {
-    squars[point.x][point.y] = point.color;
-    ctx.fillStyle = point.color;
-    ctx.strokeStyle = point.color;
+    squars[point.x][point.y].show == true;
+    ctx.fillStyle = "black";
+    ctx.strokeStyle = "black";
     ctx.fillRect((point.x*width+width/4)-square_animation_index/2,
                 (point.y*height+height/4)-square_animation_index/2,
                 (width-seperate)/2+square_animation_index,
@@ -148,15 +130,6 @@ function draw_square(point) {
         return;
     }
 }
-function clearBoard() {
-    for (let i = 0; i < squars.length; i++) {
-        for (let j = 0; j < squars[i].length; j++) {
-            if (squars[i][j] != "black" && squars[i][j] != "grey"  && squars[i][j] != "blue"  && squars[i][j] != "red" ) {
-                squars[i][j] = "grey";
-            }
-        }
-    }
-}
 /*TODO: require doc!! */
 function onClick(e) {
     square_animation_index = 0;
@@ -166,30 +139,7 @@ function onClick(e) {
     clicY = e.pageY-pageShift;
     isChanged = false;
     for (let x = 0; x < squars.length; x++) {
-        let is_grey_row = row_color(x);
         for (let y = 0; y < squars[x].length; y++) {
-            if (e.button==2 && (squars[x][y] == "blue" || squars[x][y] == "red")) {
-                if (squars[x][y] == "blue" && !startExist) {
-                    squars[x][y] = "grey";
-                }
-                else if (squars[x][y] == "red" && startExist) {
-                    squars[x][y] = "grey";
-                }
-            }
-            //draw a full row of squares
-            else if(full_line_mark && clicX >= x*width && clicX <= x*width+width-seperate && e.button!=2)
-            {
-                //update_square(new Point(x, y, "black"))
-                if (is_grey_row) {
-                    squars[x][y] = "grey";
-                }
-                else
-                {
-                    squars[x][y] = "black";
-                }
-                
-                continue;
-            }
             if (clicX >= x*width && clicX <= x*width+width-seperate 
                 && clicY >= y*height && clicY <= y*height+height-seperate) {
                     if (e.button == 2) {
@@ -205,14 +155,11 @@ function onClick(e) {
                         }
                         isChanged = true;// if endpoint is set we update it in the end of the func
                     }
-                    else if (squars[x][y] != "grey") {
-                        update_square(new Point(x, y, "grey"));
-                    }
                     //the squre is grey and about to be black
-                    else{
-                        
+                    else if(true){
+                        //squars[x][y]
                         //calc_HGF_cost(x,y);
-                        update_square(new Point(x, y, "black"));
+                        update_square(new Point(x, y));
                     }
                     
             }        
@@ -271,7 +218,6 @@ function draw_path() {
 }
 function expand(board,x,y)
 {
-
     if(board[x][y].number == 0)
     {
         board[x][y].show = true;
