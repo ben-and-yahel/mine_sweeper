@@ -176,7 +176,7 @@ function expand(board,x,y)
     else if(board[x][y].number == -1)
     {
         alert("1");
-        bomb();
+        bomb(board);
     }
     else
     {
@@ -184,7 +184,7 @@ function expand(board,x,y)
     }
 
 }
-function bomb()
+function bomb(board)
 {
     for(let y = 0;y < board.length;y++){
         for(let x = 0;x < board[y].length;x++){
