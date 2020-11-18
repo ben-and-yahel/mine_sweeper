@@ -7,7 +7,7 @@ function dynamicallyLoadScript(url) {
 window.onload =function() {
     dynamicallyLoadScript("button_functions.js");
 
-    document.addEventListener("keypress",draw_path);
+    //document.addEventListener("keypress",draw_path);
     document.oncontextmenu = onClick;
     canv=document.getElementById("gc");
     ctx = canv.getContext("2d");
