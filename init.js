@@ -84,8 +84,8 @@ function mine_setter(bombs_number) {
     bombs = []; // bomb => [[x,y],[x,y]]
     for (let index = 0; index < bombs_number; index++) {
         do{
-            x = Math.floor((Math.random() * width) + 0);
-            y = Math.floor((Math.random() * height) + 0);
+            x = Math.floor((Math.random() * x_squares) + 0);
+            y = Math.floor((Math.random() * y_squares) + 0);
         }while(check_duplicate_mines(bombs,x,y) == false);
         squars[x][y].number = -1;
     }
@@ -99,9 +99,31 @@ function init() {
         for (let j = 0; j < y_squares; j++) {
             tmp_squars_line.push(new square(0,false));
         } 
-        board.push(tmp_squars_line);      
+        squars.push(tmp_squars_line);      
     }
-    printSquares(board);
+    mine_setter(20);
+    surround(squars, bombs);
+    printSquares();
+}
+//for loop on every item and show it on the canvas
+function printSquares() {
+    x = y = 0;
+    color = "grey";
+    for (let i = 0; i < squars.length; i++) {
+        for (let j = 0; j < squars[i].length; j++) {
+            if (squars[i][j].number == -1) {
+                color = "red";
+            }
+            else if (squars[i][j].number == 1) {
+                color = "blue";
+            }
+            else{
+                color = "grey";
+            }
+            ctx.fillStyle = color;
+            ctx.fillRect(i*width, j*height, width-seperate, height-seperate);
+        }
+    }
 }
 //make the animation of sqaure been choosen
 function draw_square(point) {
@@ -210,18 +232,7 @@ function onClick(e) {
 function update_square(point) {
     animate_square = setInterval(draw_square,1000/animation_rate,point);
 }
-//for loop on every item and show it on the canvas
-function printSquares() {
-    x = y = 0;
-    color = "grey";
-    for (let i = 0; i < squars.length; i++) {
-        for (let j = 0; j < squars[i].length; j++) {
-            //color = squars[i][j];
-            ctx.fillStyle = color;
-            ctx.fillRect(i*width, j*height, width-seperate, height-seperate);
-        }
-    }
-}
+
 
 function draw_path() {
 
@@ -317,4 +328,5 @@ function surround(board,bombs)
         board[x+1][y-1] != -1 ?  board[x+1][y-1].number += 1 : board[x+1][y-1].number += 0 ;
         board[x-1][y+1] != -1 ?  board[x-1][y+1].number += 1 : board[x-1][y+1].number += 0 ;
     }
+
 }
