@@ -248,3 +248,39 @@ function draw_path() {
         printSquares();
     }
 }
+function expand(board,x,y)
+{
+
+    if(board[x][y].bombsNumber == 0)
+    {
+        board[x][y].show = true;
+        if(board[x+1][y].show === false && board[x+1][y] != -1)
+            board[x+1][y] == 0 ? expand(board,x+1,y) : board[x+1][y].show = true;
+        if(board[x-1][y].show === false && board[x-1][y] != -1)
+            board[x-1][y] == 0 ? expand(board,x-1,y) : board[x-1][y].show = true;
+        if(board[x][y+1].show === false && board[x][y+1] != -1)
+            board[x][y+1] == 0 ? expand(board,x,y+1) : board[x][y+1].show = true;
+        if(board[x][y-1].show === false && board[x][y-1] != -1)       
+            board[x][y-1] == 0 ? expand(board,x,y-1) : board[x][y-1].show = true;
+    }
+    else if(board[x][y] == -1)
+    {
+        bomb();
+    }
+    else
+    {
+        board[x][y].show = true;
+    }
+
+}
+function bomb()
+{
+    for(let y = 0;y < board.length;y++){
+        for(let x = 0;x < board[y].length;x++){
+            if(board[x][y] == -1)
+            {
+                board[x][y].show = true;
+            }
+        }
+    }
+}
