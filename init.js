@@ -25,7 +25,7 @@ seperate = 1;
 squars = []; // square => [int]
 x_squares = y_squares = 10;
 board = [];
-mines_number = 1;
+mines_number = 15;
 flags_counter = mines_number;
 const flagImage = new Image(width - 10, height - 10); // Using optional size for image
 // Load an image of intrinsic size 300x227 in CSS pixels
@@ -136,20 +136,23 @@ function onClick(e) {
                             squars[x][y].question = true;
                             break;
                         case 2:
-                            
                             if (squars[x][y].redFlag == true) {
                                 flags_counter += 1;
                                 squars[x][y].show = false;
                                 squars[x][y].redFlag = false;
                             }
-                            else if (flags_counter == 0) {
+                            else if (squars[x][y].show || flags_counter == 0) {
                                 break;
                             }
                             else {
                                 squars[x][y].redFlag = true;
                                 flags_counter -= 1;
                             }
+                            if (checkWinByMines(squars)) {
+                                alert("you won the game!!!");
+                            } 
                             break;
+                            
                         default:
                             break;
                     }
@@ -158,9 +161,7 @@ function onClick(e) {
         }
     }
     printSquares();
-    if (checkWin(squars)) {
-        alert("you won the game!!!");
-    } 
+    return false;
 }
 function expand(board,x,y)
 {
