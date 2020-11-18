@@ -268,11 +268,11 @@ function draw_square(point) {
 function update_square(point) {
     animate_square = setInterval(draw_square,1000/animation_rate,point);
 }
-function checkWin(board)
+function checkWin(board)//check for 2 kinds of win
 {
     return checkWinByMines(board) || checkWinBySquares(board);
 }
-function checkWinByMines(board)
+function checkWinByMines(board)//checks if al of the mines are flaged
 {
     for(let y = 0;y < board.length;y++){
         for(let x = 0;x < board[y].length;x++){
@@ -284,7 +284,7 @@ function checkWinByMines(board)
     }
     return true;
 }
-function checkWinBySquares(board)
+function checkWinBySquares(board)//checks if all of the squares are shown
 {
     for(let y = 0;y < board.length;y++){
         for(let x = 0;x < board[y].length;x++){
