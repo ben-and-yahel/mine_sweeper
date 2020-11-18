@@ -102,7 +102,7 @@ function init() {
         squars.push(tmp_squars_line);      
     }
     mine_setter(20);
-    surround(squars, bombs);
+    squars = surround(squars, bombs);
     printSquares();
 }
 //for loop on every item and show it on the canvas
@@ -328,5 +328,5 @@ function surround(board,bombs)
         board[x+1][y-1] != -1 ?  board[x+1][y-1].number += 1 : board[x+1][y-1].number += 0 ;
         board[x-1][y+1] != -1 ?  board[x-1][y+1].number += 1 : board[x-1][y+1].number += 0 ;
     }
-
+    return board;
 }
