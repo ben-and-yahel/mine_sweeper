@@ -302,3 +302,19 @@ function bomb()
         }
     }
 }
+function surround(board,bombs)
+{
+    for(let b in bombs)
+    {
+        let x = b[0];
+        let y = b[1];
+        board[x+1][y] == -1 ?  board[x+1][y].bombsNumber += 1 : board[x+1][y].bombsNumber += 0 ;
+        board[x][y+1] == -1 ?  board[x][y+1].bombsNumber += 1 : board[x][y+1].bombsNumber += 0 ;
+        board[x-1][y] == -1 ?  boardboard[x-1][y].bombsNumber += 1 : board[x-1][y].bombsNumber += 0 ;
+        board[x][y-1] == -1 ?  board[x][y-1].bombsNumber += 1 : board[x][y-1].bombsNumber += 0 ;
+        board[x+1][y+1] == -1 ?  board[x+1][y+1].bombsNumber += 1 : board[x+1][y+1].bombsNumber += 0 ;
+        board[x-1][y-1] == -1 ?  board[x-1][y-1].bombsNumber += 1 : board[x-1][y-1].bombsNumber += 0 ;
+        board[x+1][y-1] == -1 ?  board[x+1][y-1].bombsNumber += 1 : board[x+1][y-1].bombsNumber += 0 ;
+        board[x-1][y+1] == -1 ?  board[x-1][y+1].bombsNumber += 1 : board[x-1][y+1].bombsNumber += 0 ;
+    }
+}
