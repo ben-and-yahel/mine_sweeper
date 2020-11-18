@@ -45,6 +45,24 @@ cornerRadius = 15;
 
 x_squares = y_squares = 10;
 board = [];
+const flagImage = new Image(width - 10, height - 10); // Using optional size for image
+// Load an image of intrinsic size 300x227 in CSS pixels
+flagImage.src = 'kisspng-red-flag-computer-icons-clip-art-flag-5ab891fa270012.8897476815220454341598.png';
+let num_images = [
+    new Image(width - 10, height - 10),
+    new Image(width - 10, height - 10),
+    new Image(width - 10, height - 10),
+    new Image(width - 10, height - 10),
+    new Image(width - 10, height - 10),
+    new Image(width - 10, height - 10),
+    new Image(width - 10, height - 10),
+    new Image(width - 10, height - 10),
+    new Image(width - 10, height - 10)
+]
+for(let i = 0;i<num_images.length;i++)
+{
+    num_images[i].src = "76px-Minesweeper_" + i + ".svg.png";
+}
 class square{
     constructor(number, show){
     this.number = number;
@@ -85,6 +103,8 @@ function init() {
     }
     bombs = mine_setter(20);
     surround(squars, bombs);
+    
+    
     printSquares();
 }
 //for loop on every item and show it on the canvas
@@ -93,20 +113,25 @@ function printSquares() {
     color = "grey";
     for (let i = 0; i < squars.length; i++) {
         for (let j = 0; j < squars[i].length; j++) {
-            if (squars[i][j].number == -1) {
+            ctx.fillStyle = color;
+            ctx.fillRect(i*width, j*height, width-seperate, height-seperate);
+            if(squars[i][j].flag == true)
+                ctx.drawImage(flagImage,i*width, j*height, width-seperate, height-seperate)
+        
+            else if (squars[i][j].number == -1) {
                 color = "red";
             }
-            else if (squars[i][j].number == 1) {
-                color = "blue";
+            else if (squars[i][j].number > -1 && squars[i][j].show == true) {
+                ctx.drawImage(num_images[squars[i][j].number],i*width, j*height, width-seperate, height-seperate)
+
             }
             else if(squars[i][j].show == true){
+
                 color = "black";
             }
             else{
                 color = "grey";
             }
-            ctx.fillStyle = color;
-            ctx.fillRect(i*width, j*height, width-seperate, height-seperate);
         }
     }
 }
