@@ -20,12 +20,13 @@ window.onload =function() {
 
 
 strap_height = 138;
-height = width = 80;
+height = width = 50;
 seperate = 1;
 squars = []; // square => [int]
-x_squares = y_squares = 10;
+ y_squares = 15;
+ x_squares = 30;
 board = [];
-mines_number = 15;
+mines_number = 12;
 flags_counter = mines_number;
 const flagImage = new Image(width - 10, height - 10); // Using optional size for image
 // Load an image of intrinsic size 300x227 in CSS pixels
@@ -92,7 +93,7 @@ function init() {
 //for loop on every item and show it on the canvas
 function printSquares() {
     x = y = 0;
-    color = "grey";
+    color = "#0066ff";
     welcome.innerHTML = "Welocome to the Mine Sweeper! you got "+flags_counter+" flags / "+mines_number+" mines";
 
     for (let i = 0; i < squars.length; i++) {
@@ -112,18 +113,19 @@ function printSquares() {
 
             }
             else{
-                color = "grey";
+                color = "#0066ff";
             }
         }
     }
 }
 /*TODO: require doc!! */
 function onClick(e) {
-    square_animation_index = 0;
-    clearInterval(animate_square);
+    // square_animation_index = 0;
+    // clearInterval(animate_square);
     pageShift = 65;
     clicX = e.pageX;
     clicY = e.pageY-pageShift;
+    //search the click in squars
     for (let x = 0; x < squars.length; x++) {
         for (let y = 0; y < squars[x].length; y++) {
             if (clicX >= x*width && clicX <= x*width+width-seperate 
@@ -131,9 +133,6 @@ function onClick(e) {
                     switch (e.button) {
                         case 0:
                             expand(squars,x,y);
-                            break;
-                        case 4:
-                            squars[x][y].question = true;
                             break;
                         case 2:
                             if (squars[x][y].redFlag == true) {
@@ -152,7 +151,6 @@ function onClick(e) {
                                 alert("you won the game!!!");
                             } 
                             break;
-                            
                         default:
                             break;
                     }
@@ -235,35 +233,6 @@ function surround(board,bombs)//the function going on the locations of the mines
     }
     return board;
 }
-
-
-square_animation_index = 0;
-animate_square = undefined;
-animation_rate = 70;
-cornerRadius = 15;
-isAnimate = true;
-//make the animation of sqaure been choosen
-function draw_square(point) {
-    ctx.fillStyle = "black";
-    ctx.strokeStyle = "black";
-    ctx.fillRect((point.x*width+width/4)-square_animation_index/2,
-                (point.y*height+height/4)-square_animation_index/2,
-                (width-seperate)/2+square_animation_index,
-                (height-seperate)/2+square_animation_index);
-    square_animation_index +=1;
-    if (square_animation_index > (height/2)-seperate-6) {
-        square_animation_index = 0;
-
-        // ctx.strokeRect(point.x*width+(cornerRadius/2), point.y*height+(cornerRadius/2), width-cornerRadius-seperate, height-cornerRadius-seperate);
-        // ctx.fillRect(point.x*width+(cornerRadius/2), point.y*height+(cornerRadius/2), width-cornerRadius-seperate, height-cornerRadius-seperate);
-        ctx.fillRect(point.x*width, point.y*height, width-seperate, height-seperate);
-        clearInterval(animate_square);
-        return;
-    }
-}
-function update_square(point) {
-    animate_square = setInterval(draw_square,1000/animation_rate,point);
-}
 function checkWin(board)//check for 2 kinds of win
 {
     return checkWinByMines(board) || checkWinBySquares(board);
@@ -292,3 +261,32 @@ function checkWinBySquares(board)//checks if all of the squares are shown
     }
     return true;
 }
+
+// ----------- all animation functions ----------
+// square_animation_index = 0;
+// animate_square = undefined;
+// animation_rate = 70;
+// cornerRadius = 15;
+// isAnimate = true;
+// //make the animation of sqaure been choosen
+// function draw_square(point) {
+//     ctx.fillStyle = "black";
+//     ctx.strokeStyle = "black";
+//     ctx.fillRect((point.x*width+width/4)-square_animation_index/2,
+//                 (point.y*height+height/4)-square_animation_index/2,
+//                 (width-seperate)/2+square_animation_index,
+//                 (height-seperate)/2+square_animation_index);
+//     square_animation_index +=1;
+//     if (square_animation_index > (height/2)-seperate-6) {
+//         square_animation_index = 0;
+
+//         // ctx.strokeRect(point.x*width+(cornerRadius/2), point.y*height+(cornerRadius/2), width-cornerRadius-seperate, height-cornerRadius-seperate);
+//         // ctx.fillRect(point.x*width+(cornerRadius/2), point.y*height+(cornerRadius/2), width-cornerRadius-seperate, height-cornerRadius-seperate);
+//         ctx.fillRect(point.x*width, point.y*height, width-seperate, height-seperate);
+//         clearInterval(animate_square);
+//         return;
+//     }
+// }
+// function update_square(point) {
+//     animate_square = setInterval(draw_square,1000/animation_rate,point);
+// }

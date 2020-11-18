@@ -3,13 +3,16 @@ html, body {
     height: 100%;
     margin: 0;
             } 
+body{
+  background-color: #99ddff;
+}
 #reload{
   user-select: none;
   position: absolute;
   display: inline-block;
   left: 520px;
   top: 0px;
-  background-color: #7755a3;
+  background-color: #bfbfbf;
   color: white;
   padding: 14px;
   font-size: 13px;
@@ -54,7 +57,7 @@ html, body {
 #welcome{
     user-select: none;
     color: white; 
-    background-color:purple;
+    background-color: #8080ff;
     font-family: Comic Sans MS;
 }
 .dropbtn {
