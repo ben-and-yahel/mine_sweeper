@@ -90,6 +90,7 @@ function mine_setter(bombs_number) {
             y = Math.floor((Math.random() * y_squares) + 0);
         }while(check_duplicate_mines(bombs,x,y) == false);
         squars[x][y].number = -1;
+        bombs.push([x,y]);
     }
     return bombs;
 }
@@ -103,7 +104,7 @@ function init() {
         } 
         squars.push(tmp_squars_line);      
     }
-    mine_setter(20);
+    bombs = mine_setter(20);
     squars = surround(squars, bombs);
     printSquares();
 }
@@ -146,15 +147,6 @@ function draw_square(point) {
         clearInterval(animate_square);
         return;
     }
-}
-//check colum if all black
-function row_color(x) {
-        for (let y = 0; y < squars[x].length; y++) {
-            if(squars[x][y] != "black"){
-                return false;
-            }
-        }
-    return true;
 }
 function clearBoard() {
     for (let i = 0; i < squars.length; i++) {
@@ -234,8 +226,6 @@ function onClick(e) {
 function update_square(point) {
     animate_square = setInterval(draw_square,1000/animation_rate,point);
 }
-
-
 function draw_path() {
 
     if (end == undefined) {
