@@ -93,7 +93,7 @@ function printSquares() {
     color = "grey";
     for (let i = 0; i < squars.length; i++) {
         for (let j = 0; j < squars[i].length; j++) {
-            if (squars[i][j].number == -1) {
+            if (squars[i][j].number == -1 && squars[i][j].show) {
                 color = "red";
             }
             ctx.fillStyle = color;
@@ -188,7 +188,7 @@ function bomb()
 {
     for(let y = 0;y < board.length;y++){
         for(let x = 0;x < board[y].length;x++){
-            if(board[x][y] == -1)
+            if(board[x][y].number == -1)
             {
                 board[x][y].show = true;
             }
