@@ -70,6 +70,8 @@ class square{
     constructor(number, show){
     this.number = number;
     this.show = show;
+    this.redFlag = false;
+    this.question = false;
     }
 }
 function check_duplicate_mines(bombs, x, y) {
