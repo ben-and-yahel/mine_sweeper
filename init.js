@@ -84,7 +84,7 @@ function init() {
         squars.push(tmp_squars_line);      
     }
     bombs = mine_setter(20);
-    //squars = surround(squars, bombs);
+    surround(squars, bombs);
     printSquares();
 }
 //for loop on every item and show it on the canvas
