@@ -125,10 +125,6 @@ function printSquares() {
                 ctx.drawImage(num_images[squars[i][j].number],i*width, j*height, width-seperate, height-seperate)
 
             }
-            else if(squars[i][j].show == true){
-
-                color = "black";
-            }
             else{
                 color = "grey";
             }
