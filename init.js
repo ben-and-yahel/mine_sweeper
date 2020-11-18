@@ -5,10 +5,7 @@ function dynamicallyLoadScript(url) {
 }
 
 window.onload =function() {
-    dynamicallyLoadScript("cost_algorithem.js");
     dynamicallyLoadScript("button_functions.js");
-    dynamicallyLoadScript("path_draw.js");
-    dynamicallyLoadScript("star_algorithm.js");
 
     document.addEventListener("keypress",draw_path);
     document.oncontextmenu = onClick;
@@ -52,10 +49,10 @@ class Node{
 
 }
 strap_height = 138;
-height = width = 20;
+height = width = 100;
 algorithem_mind = []; // mind => [[stage],[stage]], stage => [[x,y],[x,y]]
 seperate = 1;
-squars = []; // square => [color]
+squars = []; // square => [int]
 startExist = false;
 start = end = undefined;
 isAnimate = true;
@@ -66,17 +63,41 @@ square_animation_index = 0;
 animate_square = undefined;
 animation_rate = 70;
 cornerRadius = 15;
-var debug_mode; // declare it because debug.html declare it anyways
-// ----------------init functions--------------------
 
+x_squares = y_squares = 10;
+
+class square{
+    constructor(number, show){
+    this.number = number;
+    this.show = show;
+    }
+}
+function check_duplicate_mines(bombs, x, y) {
+    for (let index = 0; index < bombs.length; index++) {
+        if (bombs[index][0] == x && bombs[index][1] == y) {
+            return false;
+        }
+    }
+    return true;
+}
+function mine_setter(bombs_number) {
+    bombs = []; // bomb => [[x,y],[x,y]]
+    for (let index = 0; index < bombs_number; index++) {
+        do{
+            x = Math.floor((Math.random() * width) + 0);
+            y = Math.floor((Math.random() * height) + 0);
+        }while(check_duplicate_mines(bombs,x,y) == false);
+        squars[x][y].number = -1;
+    }
+    return bombs;
+}
+// ----------------init functions--------------------
 function init() {
     //makes the squars
-    for (let i = 0; i < ctx.canvas.width/width; i++) {
+    for (let i = 0; i < x_squares; i++) {
         tmp_squars_line = [];
-        for (let j = 0; j < ctx.canvas.height/height; j++) {
-            //ctx.fillRect(i+seperate, j+seperate, width, height);
-            //TODO: change all the code to points instead of just string
-            tmp_squars_line.push(["grey"]); // i,j is location | false is for isBarriar     
+        for (let j = 0; j < y_squares; j++) {
+            tmp_squars_line.push(new square(0,false));
         } 
         squars.push(tmp_squars_line);      
     }
@@ -173,10 +194,7 @@ function onClick(e) {
                     }
                     //the squre is grey and about to be black
                     else{
-                        if (debug_mode) {
-                            h = document.getElementById("welcome");
-                            h.innerHTML  = "y:"+y+" x:"+x;
-                        }
+                        
                         //calc_HGF_cost(x,y);
                         update_square(new Point(x, y, "black"));
                     }
@@ -198,7 +216,7 @@ function printSquares() {
     color = "grey";
     for (let i = 0; i < squars.length; i++) {
         for (let j = 0; j < squars[i].length; j++) {
-            color = squars[i][j];
+            //color = squars[i][j];
             ctx.fillStyle = color;
             ctx.fillRect(i*width, j*height, width-seperate, height-seperate);
         }
