@@ -18,9 +18,6 @@ window.onload =function() {
 }
 
 
-
-
-
 strap_height = 138;
 height = width = 80;
 seperate = 1;
