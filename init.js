@@ -93,14 +93,16 @@ function printSquares() {
     color = "grey";
     for (let i = 0; i < squars.length; i++) {
         for (let j = 0; j < squars[i].length; j++) {
+            //draw mines
             if (squars[i][j].number == -1 && squars[i][j].show) {
                 color = "red";
             }
             ctx.fillStyle = color;
             ctx.fillRect(i*width, j*height, width-seperate, height-seperate);
+            //draw flags
             if(squars[i][j].redFlag == true)
                 ctx.drawImage(flagImage,i*width, j*height, width-seperate, height-seperate)
-        
+            //draw numbers
             else if (squars[i][j].number > -1 && squars[i][j].show == true) {
                 ctx.drawImage(num_images[squars[i][j].number],i*width, j*height, width-seperate, height-seperate)
 
@@ -151,7 +153,7 @@ function onClick(e) {
 }
 function expand(board,x,y)
 {
-    if(board[x][y].number == 0)
+    if(board[x][y].number == 0)//if zero - expand, check your borders and find out rather you can expand or not, use recursive method
     {
         board[x][y].show = true;
     
@@ -173,18 +175,18 @@ function expand(board,x,y)
             expand(board,x-1,y+1);
 
     }
-    else if(board[x][y].number == -1)
+    else if(board[x][y].number == -1)//if land on a mine - you lost
     {
-        alert("1");
+        alert("Im sorry but you are dead :]");
         bomb(board);
     }
-    else
+    else//in case of more then zero just show
     {
         board[x][y].show = true;
     }
 
 }
-function bomb(board)
+function bomb(board)//showing the location of all he mines
 {
     for(let y = 0;y < board.length;y++){
         for(let x = 0;x < board[y].length;x++){
@@ -195,7 +197,8 @@ function bomb(board)
         }
     }
 }
-function surround(board,bombs)
+//initiate the board and check how many mines exist around a cube
+function surround(board,bombs)//the function going on the locations of the mines and add to the cubes that surrounding them 1
 {
     for(let i = 0;i<bombs.length;i++)
     {
