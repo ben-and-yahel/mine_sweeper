@@ -65,7 +65,7 @@ animation_rate = 70;
 cornerRadius = 15;
 
 x_squares = y_squares = 10;
-
+board = [];
 class square{
     constructor(number, show){
     this.number = number;
@@ -101,9 +101,9 @@ function init() {
         for (let j = 0; j < y_squares; j++) {
             tmp_squars_line.push(new square(0,false));
         } 
-        squars.push(tmp_squars_line);      
+        board.push(tmp_squars_line);      
     }
-    printSquares(squars);
+    printSquares(board);
 }
 //make the animation of sqaure been choosen
 function draw_square(point) {
