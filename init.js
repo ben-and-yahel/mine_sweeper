@@ -92,14 +92,14 @@ function printSquares() {
     color = "grey";
     for (let i = 0; i < squars.length; i++) {
         for (let j = 0; j < squars[i].length; j++) {
+            if (squars[i][j].number == -1) {
+                color = "red";
+            }
             ctx.fillStyle = color;
             ctx.fillRect(i*width, j*height, width-seperate, height-seperate);
             if(squars[i][j].flag == true)
                 ctx.drawImage(flagImage,i*width, j*height, width-seperate, height-seperate)
         
-            else if (squars[i][j].number == -1) {
-                color = "red";
-            }
             else if (squars[i][j].number > -1 && squars[i][j].show == true) {
                 ctx.drawImage(num_images[squars[i][j].number],i*width, j*height, width-seperate, height-seperate)
 
