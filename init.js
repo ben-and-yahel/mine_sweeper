@@ -17,32 +17,14 @@ window.onload =function() {
     
 }
 
-class Point{
-    constructor(x, y){
-        this.x = x;
-        this.y = y;
-        this.color = color;
-        this.H_cost = 0; //distance between the end point and another point
-        this.G_cost = 0;//distance between the start point and another point
-        this.F_cost = 0;// the sum of g cost and h cost
-    }
-}
+
+
+
+
 strap_height = 138;
 height = width = 80;
-algorithem_mind = []; // mind => [[stage],[stage]], stage => [[x,y],[x,y]]
 seperate = 1;
 squars = []; // square => [int]
-startExist = false;
-start = end = undefined;
-isAnimate = true;
-algorithem_number = 1;
-stage_index = 0;
-full_line_mark = false;
-square_animation_index = 0;
-animate_square = undefined;
-animation_rate = 70;
-cornerRadius = 15;
-
 x_squares = y_squares = 10;
 board = [];
 const flagImage = new Image(width - 10, height - 10); // Using optional size for image
@@ -131,111 +113,43 @@ function printSquares() {
         }
     }
 }
-//make the animation of sqaure been choosen
-function draw_square(point) {
-    squars[point.x][point.y].show == true;
-    ctx.fillStyle = "black";
-    ctx.strokeStyle = "black";
-    ctx.fillRect((point.x*width+width/4)-square_animation_index/2,
-                (point.y*height+height/4)-square_animation_index/2,
-                (width-seperate)/2+square_animation_index,
-                (height-seperate)/2+square_animation_index);
-    square_animation_index +=1;
-    if (square_animation_index > (height/2)-seperate-6) {
-        square_animation_index = 0;
-
-        // ctx.strokeRect(point.x*width+(cornerRadius/2), point.y*height+(cornerRadius/2), width-cornerRadius-seperate, height-cornerRadius-seperate);
-        // ctx.fillRect(point.x*width+(cornerRadius/2), point.y*height+(cornerRadius/2), width-cornerRadius-seperate, height-cornerRadius-seperate);
-        ctx.fillRect(point.x*width, point.y*height, width-seperate, height-seperate);
-        clearInterval(animate_square);
-        return;
-    }
-}
 /*TODO: require doc!! */
 function onClick(e) {
+    class Point{
+        constructor(x, y , click_number){
+            this.x = x;
+            this.y = y;
+            this.click_number = click_number;
+        }
+    }
     square_animation_index = 0;
     clearInterval(animate_square);
     pageShift = 65;
     clicX = e.pageX;
     clicY = e.pageY-pageShift;
-    isChanged = false;
     for (let x = 0; x < squars.length; x++) {
         for (let y = 0; y < squars[x].length; y++) {
             if (clicX >= x*width && clicX <= x*width+width-seperate 
                 && clicY >= y*height && clicY <= y*height+height-seperate) {
-                    if (e.button == 2) {
-                        //if there is start so it gone to red for end
-                        if (startExist) {
-                            end = new Point(x, y, "red");
-                            update_square(end);
-                        }
-                        else
-                        {
-                            start = new Point(x, y, "blue");
-                            update_square(start);
-                        }
-                        isChanged = true;// if endpoint is set we update it in the end of the func
+                    switch (e.button) {
+                        case 0:
+                            squars[x][y].show = true;
+                            break;
+                        case 4:
+                            squars[x][y].question = true;
+                            break;
+                        case 2:
+                            squars[x][y].redFlag = true;
+                            break;
+                        default:
+                            break;
                     }
-                    //the squre is grey and about to be black
-                    else if(true){
-                        //squars[x][y]
-                        //calc_HGF_cost(x,y);
-                        update_square(new Point(x, y));
-                    }
-                    
+                    //update_square(new Point(x, y))
             }        
         }
     }
     printSquares();
-    isChanged ? startExist = !startExist : false;
-    isChanged = false;
     return false;
-}
-function update_square(point) {
-    animate_square = setInterval(draw_square,1000/animation_rate,point);
-}
-function draw_path() {
-
-    if (end == undefined) {
-        alert("please enter start and end point(right mouse click)!");
-        return;
-    }
-    stage_index = 0;
-    clearBoard();
-    algorithem_mind = [];
-    let result = [];
-    var t0 = performance.now()
-    switch (algorithem_number) {
-        case 1:
-            result = A_algorithm();
-            break;
-        case 2:
-            result = star_algorithm();
-            break;
-        default:
-            break;
-    }
-    var t1 = performance.now()
-    if(result != null){
-        result = result.node;
-    squars[end.x][end.y] = "red";
-    squars[start.x][start.y] = "blue";
-    path_result = result;
-    }
-    //alert("Call to doSomething took " + (t1 - t0)/1000 + " seconds.");
-    
-    
-    if (isAnimate) {
-        draw_animation(result);
-    }
-    else{
-        while(result.node)
-        {
-            squars[result.point.x][result.point.y] = "#00ffcc";  
-            result = result.node;
-        }
-        printSquares();
-    }
 }
 function expand(board,x,y)
 {
@@ -296,4 +210,33 @@ function surround(board,bombs)
             board[x-1][y+1].number != -1 ?  board[x-1][y+1].number += 1 : board[x-1][y+1].number += 0 ;
     }
     return board;
+}
+
+
+square_animation_index = 0;
+animate_square = undefined;
+animation_rate = 70;
+cornerRadius = 15;
+isAnimate = true;
+//make the animation of sqaure been choosen
+function draw_square(point) {
+    ctx.fillStyle = "black";
+    ctx.strokeStyle = "black";
+    ctx.fillRect((point.x*width+width/4)-square_animation_index/2,
+                (point.y*height+height/4)-square_animation_index/2,
+                (width-seperate)/2+square_animation_index,
+                (height-seperate)/2+square_animation_index);
+    square_animation_index +=1;
+    if (square_animation_index > (height/2)-seperate-6) {
+        square_animation_index = 0;
+
+        // ctx.strokeRect(point.x*width+(cornerRadius/2), point.y*height+(cornerRadius/2), width-cornerRadius-seperate, height-cornerRadius-seperate);
+        // ctx.fillRect(point.x*width+(cornerRadius/2), point.y*height+(cornerRadius/2), width-cornerRadius-seperate, height-cornerRadius-seperate);
+        ctx.fillRect(point.x*width, point.y*height, width-seperate, height-seperate);
+        clearInterval(animate_square);
+        return;
+    }
+}
+function update_square(point) {
+    animate_square = setInterval(draw_square,1000/animation_rate,point);
 }
