@@ -269,7 +269,7 @@ function draw_path() {
 function expand(board,x,y)
 {
 
-    if(board[x][y].bombsNumber == 0)
+    if(board[x][y].number == 0)
     {
         board[x][y].show = true;
         if(board[x+1][y].show === false && board[x+1][y] != -1)
@@ -308,13 +308,13 @@ function surround(board,bombs)
     {
         let x = b[0];
         let y = b[1];
-        board[x+1][y] == -1 ?  board[x+1][y].bombsNumber += 1 : board[x+1][y].bombsNumber += 0 ;
-        board[x][y+1] == -1 ?  board[x][y+1].bombsNumber += 1 : board[x][y+1].bombsNumber += 0 ;
-        board[x-1][y] == -1 ?  boardboard[x-1][y].bombsNumber += 1 : board[x-1][y].bombsNumber += 0 ;
-        board[x][y-1] == -1 ?  board[x][y-1].bombsNumber += 1 : board[x][y-1].bombsNumber += 0 ;
-        board[x+1][y+1] == -1 ?  board[x+1][y+1].bombsNumber += 1 : board[x+1][y+1].bombsNumber += 0 ;
-        board[x-1][y-1] == -1 ?  board[x-1][y-1].bombsNumber += 1 : board[x-1][y-1].bombsNumber += 0 ;
-        board[x+1][y-1] == -1 ?  board[x+1][y-1].bombsNumber += 1 : board[x+1][y-1].bombsNumber += 0 ;
-        board[x-1][y+1] == -1 ?  board[x-1][y+1].bombsNumber += 1 : board[x-1][y+1].bombsNumber += 0 ;
+        board[x+1][y] == -1 ?  board[x+1][y].number += 1 : board[x+1][y].number += 0 ;
+        board[x][y+1] == -1 ?  board[x][y+1].number += 1 : board[x][y+1].number += 0 ;
+        board[x-1][y] == -1 ?  boardboard[x-1][y].number += 1 : board[x-1][y].number += 0 ;
+        board[x][y-1] == -1 ?  board[x][y-1].number += 1 : board[x][y-1].number += 0 ;
+        board[x+1][y+1] == -1 ?  board[x+1][y+1].number += 1 : board[x+1][y+1].number += 0 ;
+        board[x-1][y-1] == -1 ?  board[x-1][y-1].number += 1 : board[x-1][y-1].number += 0 ;
+        board[x+1][y-1] == -1 ?  board[x+1][y-1].number += 1 : board[x+1][y-1].number += 0 ;
+        board[x-1][y+1] == -1 ?  board[x-1][y+1].number += 1 : board[x-1][y+1].number += 0 ;
     }
 }
