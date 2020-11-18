@@ -253,18 +253,26 @@ function bomb()
 }
 function surround(board,bombs)
 {
-    for(let b in bombs)
+    for(let i = 0;i<bombs.length;i++)
     {
-        let x = b[0];
-        let y = b[1];
-        board[x+1][y] != -1 ?  board[x+1][y].number += 1 : board[x+1][y].number += 0 ;
-        board[x][y+1] != -1 ?  board[x][y+1].number += 1 : board[x][y+1].number += 0 ;
-        board[x-1][y] != -1 ?  boardboard[x-1][y].number += 1 : board[x-1][y].number += 0 ;
-        board[x][y-1] != -1 ?  board[x][y-1].number += 1 : board[x][y-1].number += 0 ;
-        board[x+1][y+1] != -1 ?  board[x+1][y+1].number += 1 : board[x+1][y+1].number += 0 ;
-        board[x-1][y-1] != -1 ?  board[x-1][y-1].number += 1 : board[x-1][y-1].number += 0 ;
-        board[x+1][y-1] != -1 ?  board[x+1][y-1].number += 1 : board[x+1][y-1].number += 0 ;
-        board[x-1][y+1] != -1 ?  board[x-1][y+1].number += 1 : board[x-1][y+1].number += 0 ;
+        let x = bombs[i][0];
+        let y = bombs[i][1];
+        if(x+1 < x_squares)
+            board[x+1][y].number != -1 ?  board[x+1][y].number += 1 : board[x+1][y].number += 0 ;
+        if(y+1 < y_squares)
+            board[x][y+1].number != -1 ?  board[x][y+1].number += 1 : board[x][y+1].number += 0 ;
+        if(x-1 >= 0)
+            board[x-1][y].number != -1 ?  board[x-1][y].number += 1 : board[x-1][y].number += 0 ;
+        if(y-1 >= 0)
+            board[x][y-1].number != -1 ?  board[x][y-1].number += 1 : board[x][y-1].number += 0 ;
+        if(x+1 < x_squares && y+1 < y_squares)
+            board[x+1][y+1].number != -1 ?  board[x+1][y+1].number += 1 : board[x+1][y+1].number += 0 ;
+        if(x-1 >= 0 && y-1 >= 0)
+            board[x-1][y-1].number != -1 ?  board[x-1][y-1].number += 1 : board[x-1][y-1].number += 0 ;
+        if(x+1 < x_squares && y-1 >= 0)
+            board[x+1][y-1].number != -1 ?  board[x+1][y-1].number += 1 : board[x+1][y-1].number += 0 ;
+        if(x-1 >= 0 && y+1 < y_squares)
+            board[x-1][y+1].number != -1 ?  board[x-1][y+1].number += 1 : board[x-1][y+1].number += 0 ;
     }
     return board;
 }
