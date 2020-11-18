@@ -24,7 +24,7 @@ seperate = 1;
 squars = []; // square => [int]
 x_squares = y_squares = 10;
 board = [];
-mines_number = 80;
+mines_number = 15;
 const flagImage = new Image(width - 10, height - 10); // Using optional size for image
 // Load an image of intrinsic size 300x227 in CSS pixels
 flagImage.src = 'kisspng-red-flag-computer-icons-clip-art-flag-5ab891fa270012.8897476815220454341598.png';
@@ -98,7 +98,7 @@ function printSquares() {
             }
             ctx.fillStyle = color;
             ctx.fillRect(i*width, j*height, width-seperate, height-seperate);
-            if(squars[i][j].flag == true)
+            if(squars[i][j].redFlag == true)
                 ctx.drawImage(flagImage,i*width, j*height, width-seperate, height-seperate)
         
             else if (squars[i][j].number > -1 && squars[i][j].show == true) {
@@ -172,15 +172,10 @@ function expand(board,x,y)
         if(x-1 >= 0 && y+1 < y_squares && board[x-1][y+1].show === false)
             expand(board,x-1,y+1);
 
-
-
-
-
-
-
     }
-    else if(board[x][y] == -1)
+    else if(board[x][y].number == -1)
     {
+        alert("1");
         bomb();
     }
     else
