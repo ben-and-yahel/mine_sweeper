@@ -3,7 +3,9 @@ function dynamicallyLoadScript(url) {
     script.src = url;  // set its src to the provided URL
     document.body.appendChild(script);  // add it to the end of the head section of the page (could change 'head' to 'body' to add it to the end of the body section instead)
 }
-
+y_squares = 10;
+x_squares = 10;
+width = height = 0;
 window.onload =function() {
     dynamicallyLoadScript("button_functions.js");
     welcome = document.getElementById("welcome");
@@ -14,20 +16,24 @@ window.onload =function() {
     ctx = canv.getContext("2d");
     ctx.canvas.width  = window.innerWidth - 20;
     ctx.canvas.height = window.innerHeight - strap_height;
+
+    width = ctx.canvas.width / x_squares
+    height = ctx.canvas.height / y_squares
+    canvas_width = ctx.canvas.width;
+    canvas_height =  ctx.canvas.height;
     init();
     
 }
 
 
 strap_height = 138;
-height = width = 50;
+
 seperate = 1;
 squars = []; // square => [int]
- y_squares = 15;
- x_squares = 30;
-board = [];
-mines_number = 30;
+ 
+mines_number = x_squares * y_squares*0.1;
 flags_counter = mines_number;
+board = [];
 const flagImage = new Image(width - 10, height - 10); // Using optional size for image
 // Load an image of intrinsic size 300x227 in CSS pixels
 flagImage.src = 'kisspng-red-flag-computer-icons-clip-art-flag-5ab891fa270012.8897476815220454341598.png';
